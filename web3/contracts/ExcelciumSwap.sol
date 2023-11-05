@@ -38,17 +38,18 @@ contract ExcelciumSwap is Ownable {
     function swapETHtoEXC(uint256 amount) external payable {
         require(msg.value >= amount);
         uint256 excValue = (ratio/100) * amount * (1 - (fee/100));
-        excelcium.transfer(msg.sender, excValue);
+        require(excelcium.transfer(msg.sender, excValue));
     }
 
-    function approveEXC(uint256 amount) external {
-        excelcium.approve(address(this), amount);
-    }
 
     function swapEXCtoETH(uint256 amount) external payable {
         require(excelcium.transferFrom(msg.sender,address(this),amount));
         uint256 ethValue = (100/ratio) * amount * (1 - (fee/100));
         payable(address(this)).transfer(ethValue);
+    }
+
+    function receiveEXC(uint256 amount) external {
+        require(excelcium.transferFrom(msg.sender, address(this), amount));
     }
 
     constructor(uint _fee, uint256 _ratio) Ownable(msg.sender) {
