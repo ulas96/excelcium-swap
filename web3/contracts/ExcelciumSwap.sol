@@ -36,15 +36,15 @@ contract ExcelciumSwap is Ownable {
     IERC20 private excelcium = IERC20(tokenAddress);
 
     function swapETHtoEXC(uint256 amount) external payable {
-        require(msg.value >= amount);
-        uint256 excValue = (ratio/100) * amount * (1 - (fee/100));
-        require(excelcium.transfer(msg.sender, excValue));
+        require(msg.value >= amount, "Promised amount and invoked are different ");
+        uint256 excValue = (100/ratio) * amount;
+        require(excelcium.transfer(msg.sender, excValue), "Transfer is not executed");
     }
 
 
     function swapEXCtoETH(uint256 amount) external payable {
         require(excelcium.transferFrom(msg.sender,address(this),amount));
-        uint256 ethValue = (100/ratio) * amount * (1 - (fee/100));
+        uint256 ethValue = (ratio/100) * amount * (1 - (fee/100));
         payable(address(this)).transfer(ethValue);
     }
 
