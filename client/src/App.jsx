@@ -1,35 +1,109 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react';
+import { ethers } from "ethers";
+
+
+import contract from "./contract/ExcelciumSwap.json";
+import './App.css';
+
 
 function App() {
-  const [count, setCount] = useState(0)
+    const { abi: ABI } = contract;
+    const [account, setAccount] = useState("None");
+    const [state, setState] = useState({
+        provider: null,
+        signer: null,
+        contract: null,
+        account: null
+    });
+    const [_account] = account;
+    const [claimAmount, setClaimAmount] = useState(0);
+    const [claimedRewards, setClaimedRewards] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    useEffect(() => {
+        const connectWallet = async () => {
+            const contractAddress = "0x3853B8fc287C90970ca5fa9d6A7599422C4BAF48"; // previous: "0xAa84c17C94E8242122200f2532725bC45b572694"
+            const contractABI = ABI;
+            try{
+                const { ethereum } = window;
+                console.log(ethereum);
+                if (ethereum) {
+                    const _account = await ethereum.request({
+                        method: "eth_requestAccounts",
+                    });
+                    window.ethereum.on("chainChanged", () => {
+                        window.location.reload();
+                    });
+
+                    window.ethereum.on("accountsChanged", () => {
+                        window.location.reload();
+                    });
+
+                    const provider = new ethers.providers.Web3Provider(ethereum);
+                    const signer = provider.getSigner();
+
+                    const contract = new ethers.Contract(contractAddress, contractABI ,signer);
+                    setAccount(_account);
+                    setState({provider: provider, signer: signer, contract: contract});
+                }
+
+            } catch(e) {
+                console.log(e);
+            }
+
+        };
+        connectWallet();
+    }, []);
+
+
+
+
+
+
+
+
+    useEffect(() => {
+        getClaimedRewards();
+        console.log(claimedRewards);
+    })
+
+    const handleChange = (e) => {
+        setClaimAmount(e.target.value);
+    }
+
+    const getAllowClaim = async () => {
+        const value = await state.contract.getClaimableRewards(_account);
+
+        setClaimAmount(value)
+    }
+
+    const claimRewards = async () => {
+        await state.contract.claimRewards(claimAmount);
+    }
+
+    const getClaimedRewards = async () => {
+        const value = await state.contract.getClaimedRewards(_account);
+        console.log(value);
+        setClaimedRewards(parseInt(value._hex));
+    }
+
+
+    return (
+        <div className="claim-container">
+            <div className="claim">
+
+                <p className="claim-text">Enter amount:</p>
+
+                <div className="claim-value">
+                    <input value={claimAmount} onChange={handleChange}/>
+                    <p  className="currency">gETH</p>
+                    <p className="max" onClick={getAllowClaim}>MAX</p>
+                </div>
+                <p className="claimed-rewards">{`Previously claimed rewards: ${claimedRewards ? claimedRewards : 0}`}</p>
+                <button className="claim-button" onClick={claimRewards}>Claim</button>
+            </div>
+        </div>
+    );
+
 }
 
-export default App
+export default App;
