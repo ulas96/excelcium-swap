@@ -5,116 +5,71 @@
   text-align: center;
 }
 
-.play-container {
+.claim-container {
+   display: flex;
+   justify-content: center;
+ }
+
+.claim {
+  margin-top: 250px;
+  width: 400px;
+  height: 225px;
+  padding: auto;
   border-radius: 10px;
+  border: 1px solid #1d1a24;
   background-color: #1f1c26;
 }
 
-.move-img{
-  border-radius: 50%;
-  margin: 60px;
-}
-
-.move-img:hover{
-  box-shadow: 0 0 .2rem #d5a6a6,
-  0 0 .2rem #d5a6a6,
-  0 0 2rem #a7a6d5,
-  0 0 0.8rem #a7a6d5,
-  0 0 2.8rem #a7a6d5,
-  inset 0 0 1.3rem #a7a6d5;
-}
-.button {
-  background-color: #4d228e;
-}
 
 
-.button:hover {
-  border-color: #4d228e;
-  box-shadow: 0 0 .2rem #8d6ac8,
-  0 0 .2rem #8d6ac8,
-  0 0 2rem #8d6ac8,
-  0 0 0.8rem #8d6ac8,
-  0 0 2.8rem #8d6ac8,
-  inset 0 0 1.3rem #8d6ac8;
-}
-
-
-
-.selected {
-  box-shadow: 0 0 .2rem #d5a6a6,
-  0 0 .2rem #d5a6a6,
-  0 0 2rem #a7a6d5,
-  0 0 0.8rem #a7a6d5,
-  0 0 2.8rem #a7a6d5,
-  inset 0 0 1.3rem #a7a6d5;
-}
-.create-button {
-  border-radius: 10px;
-  margin-top: 100px;
-  margin-bottom: 60px;
-}
-.pending-games-container{
-  padding-bottom: 10px;
-}
-
-.pending-games{
-  margin-top: 5px;
-  margin-bottom: 10px;
-}
-
-
-.move-text{
-  margin-top: 100px;
-}
-
-.move-selection {
+.claim-value {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 10px;
-}
-
-
-.pending-game-element {
-  display: flex;
-  align-items: center;
+  align-items: row;
   justify-content: center;
-  margin-left: 30%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border: 2px solid #4d228e;
-  padding-left: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  max-width: 41.5%;
+}
+
+input{
+  width: 150px;
+  background-color: transparent;
+  border: none;
+  font-size: 30px;
+}
+
+input:focus {
+  outline: none;
+}
+.max {
+  padding-left: 30px;
+}
+.max:hover{
+  cursor: pointer;
+}
+
+.claimed-rewards {
+  opacity: 0.5;
+}
+
+.currency{
+  padding-top: 2px;
+  font-size: 15px;
+  opacity: 0.5;
+}
+
+.claim-text{
+  opacity: 0.5;
+}
+
+.claim-button{
+
+  border: none;
   border-radius: 10px;
-}
-#join-button {
-  margin-left: 50px;
-  bottom: 5px;
-  padding-bottom: 10px;
+  background-color: #4d228e;
+  font-weight: bold;
+
 }
 
-.game-creator{
-  display: flex;
-  align-items: center;
-  max-width: 380px;
-}
+@media screen {
 
-@media screen and (max-width: 768px) {
-  .move-img{
-    width: 100px;
-  }
 
-  .pending-game-element{
-    display: absolute;
-  }
 
-  #join-button {
-    justify-content: contain;
-    position: relative;
-    right: 10px;
-    top: 1px
-
-  }
 }
