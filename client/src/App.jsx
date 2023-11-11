@@ -88,18 +88,18 @@ function App() {
 
 
     return (
-        <div className="claim-container">
-            <div className="claim">
+        <div className="swap-container">
+            <div className="swap">
 
-                <p className="claim-text">Enter amount:</p>
+                <p className="swap-text">Enter amount:</p>
 
-                <div className="claim-value">
+                <div className="swap-value">
                     <input value={claimAmount} onChange={handleChange}/>
-                    <p  className="currency">gETH</p>
+                    <p  className="currency">sETH</p>
                     <p className="max" onClick={getAllowClaim}>MAX</p>
                 </div>
-                <p className="claimed-rewards">{`Previously claimed rewards: ${claimedRewards ? claimedRewards : 0}`}</p>
-                <button className="claim-button" onClick={claimRewards}>Claim</button>
+
+                <button className="swap-button" onClick={claimRewards}>Claim</button>
             </div>
         </div>
     );
