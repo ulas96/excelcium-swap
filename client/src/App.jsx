@@ -99,6 +99,12 @@ function App() {
                     <p className="max" onClick={getAllowClaim}>MAX</p>
                 </div>
 
+                <div className="swap-value">
+                    <input value={claimAmount} onChange={handleChange}/>
+                    <p  className="currency">sETH</p>
+                    <p className="max" onClick={getAllowClaim}>MAX</p>
+                </div>
+
                 <button className="swap-button" onClick={claimRewards}>Claim</button>
             </div>
         </div>
